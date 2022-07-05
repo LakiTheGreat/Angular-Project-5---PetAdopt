@@ -1,0 +1,92 @@
+<div class="row">
+  <div class="col-6">
+    <div class="row">
+      <div class="col-6">
+        <img src="{{ pet.image }}" class="img-fluid" alt="slika" />
+      </div>
+      <div class="col-6">
+        <h3>{{ pet.name }}</h3>
+        <p>Category: {{ pet.category | titlecase }}</p>
+        <p>Sex: {{ pet.sex == "m" ? "Male" : "Female" }}</p>
+        <p>Size: {{ pet.size_kg }}kg</p>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <hr />
+      {{ pet.story }}
+    </div>
+  </div>
+  <div class="col-6">
+    <form novalidate #forma="ngForm">
+      <h2 class="text-center">Adopt</h2>
+      <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input
+          [(ngModel)]="adoption.name"
+          type="text"
+          class="form-control"
+          id="name"
+          placeholder="Enter your full name"
+          name="name"
+          #inputName="ngModel"
+          required
+          minlength="2"
+        />
+        <small
+          *ngIf="
+            inputName.touched &&
+            inputName.errors &&
+            inputName.errors['required']
+          "
+          class="text-danger"
+          >Name is required!</small
+        >
+        <small
+          *ngIf="
+      inputName.touched  && inputName.errors?.['minlength']
+    "
+          class="text-danger"
+          >Name must contain at least 2 characteres!</small
+        >
+      </div>
+      <div class="mb-3">
+        <label for="contact" class="form-label">Contact:</label>
+        <input
+          [(ngModel)]="adoption.contact"
+          type="text"
+          class="form-control"
+          id="name"
+          placeholder="Enter your contact info (email/phone)"
+          name="contact"
+          #inputContact="ngModel"
+          required
+          minlength="2"
+        />
+        <small
+          *ngIf="
+            inputContact.touched &&
+            inputContact.errors &&
+            inputContact.errors['required']
+          "
+          class="text-danger"
+          >Contact is required!</small
+        >
+        <small
+          *ngIf="
+    inputContact.touched  && inputContact.errors?.['minlength']
+  "
+          class="text-danger"
+          >Contact must contain at least 2 characteres!</small
+        >
+      </div>
+      <input
+        [disabled]="forma.invalid"
+        type="submit"
+        value="Submit request"
+        class="btn btn-primary"
+        (click)="submitAdoption()"
+      />
+    </form>
+    <!-- {{ adoption | json }} -->
+  </div>
+</div>
